@@ -5,3 +5,7 @@ output "vpc_id" {
 output "vpc_cidr_block" {
   value = module.vpc.vpc_cidr_block 
 }
+
+output "private_subnet_ids" {
+  value = module.vpc.private_subnet_objects
+}
