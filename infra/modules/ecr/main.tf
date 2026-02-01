@@ -24,7 +24,7 @@ data "aws_ecr_lifecycle_policy_document" "app" {
 }
 
 resource "aws_ecr_lifecycle_policy" "app" {
-  repository = aws_ecr_repository.app.name
+  repository = aws_ecr_repository.url-shortener.name
 
   policy = data.aws_ecr_lifecycle_policy_document.app.json
 }

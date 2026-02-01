@@ -3,11 +3,11 @@ variable "container-image" {
 }
 
 variable "private_subnet_ids" {
-  type = string
+  type = list(string)
 }
 
 variable "ecs_sg_id" {
-  type = string
+  type = list(string)
 }
 
 variable "ecs_target_group_arn" {
