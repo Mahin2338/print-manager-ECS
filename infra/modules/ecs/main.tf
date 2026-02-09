@@ -29,7 +29,7 @@ resource "aws_ecs_task_definition" "url-shortener" {
   container_definitions = jsonencode([
     {
       name      = "url-shortener"
-      image     = "754056705747.dkr.ecr.eu-west-2.amazonaws.com/url-shortener:v2"
+      image     = "754056705747.dkr.ecr.eu-west-2.amazonaws.com/print-manager:latest"
       cpu       = 256
       memory    = 512
       essential = true
@@ -39,23 +39,20 @@ resource "aws_ecs_task_definition" "url-shortener" {
 
       environment = [
         {
-          name = "TABLE_NAME"
-          value = "url-dynamodb"
+          name = "DATABASE_URL"
+          value = "postgresql://admin:password@print-manager-db.xyz.amazonaws.com:5432/printmanager"
         
-        },
-        {
-          name = "AWS_DEFUALT_REGION"
-          value = "eu-west-2"
         }
+        
       ]
 
       logConfiguration = {
         logDriver = "awslogs"
         options = {
-          "awslogs-group"  = aws_cloudwatch_log_group.app.name
-          "awslogs-region" = "eu-west-2"
+          awslogs-group  = "aws_cloudwatch_log_group.app.name"
+          awslogs-region = "eu-west-2"
 
-          "awslogs-stream-prefix" = "ecs"
+          awslogs-stream-prefix = "ecs"
 
       } }
 
@@ -122,19 +119,3 @@ resource "aws_iam_role" "ecs_task_role" {
   })
 }
 
-resource "aws_iam_role_policy" "dynamodb_policy" {
-  name = "dynamodb-access"
-  role = aws_iam_role.ecs_task_role.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Effect = "Allow"
-      Action = [
-        "dynamodb:PutItem",
-        "dynamodb:GetItem"
-      ]
-      Resource = var.dynamodb_table_arn
-    }]
-  })
-}

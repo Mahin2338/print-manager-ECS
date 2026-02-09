@@ -14,6 +14,3 @@ variable "ecs_target_group_arn" {
   type = string
 }
 
-variable "dynamodb_table_arn" {
-  type = string
-}

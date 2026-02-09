@@ -14,9 +14,11 @@ module "security" {
     
 }
 
-module "dynamodb" {
-  source = "../../modules/dynamodb"
-
+module "rds" {
+  source = "../../modules/rds"
+  db_password = var.db_password
+  private_subnet_ids = module.networking.private_subnet_ids
+  rds_sg_id = module.security.rds_sg_id
 }
 
 module "ecr" {
@@ -25,7 +27,6 @@ module "ecr" {
 
 module "ecs" {
   source = "../../modules/ecs"
-  dynamodb_table_arn = module.dynamodb.dynamodb_table_arn
   ecs_sg_id = [module.security.ecs_sg_id]
   private_subnet_ids = module.networking.private_subnet_ids
   ecs_target_group_arn = module.alb.blue_target_group_arn
