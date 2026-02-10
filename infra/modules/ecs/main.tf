@@ -7,12 +7,8 @@ resource "aws_ecs_cluster" "main" {
 }
 
 resource "aws_cloudwatch_log_group" "app" {
-  name              = "url-shortener"
+  name = "ecs"
   retention_in_days = 7
-
-  tags = {
-    Name = "url-shortener-logs"
-  }
 }
 
 
@@ -40,7 +36,7 @@ resource "aws_ecs_task_definition" "url-shortener" {
       environment = [
         {
           name = "DATABASE_URL"
-          value = "postgresql://admin:password@print-manager-db.xyz.amazonaws.com:5432/printmanager"
+          value = "postgresql://admin:password123@${var.rds_endpoint}/printmanager?sslmode=require"
         
         }
         
@@ -49,10 +45,10 @@ resource "aws_ecs_task_definition" "url-shortener" {
       logConfiguration = {
         logDriver = "awslogs"
         options = {
-          awslogs-group  = "aws_cloudwatch_log_group.app.name"
-          awslogs-region = "eu-west-2"
+          "awslogs-group"  = aws_cloudwatch_log_group.app.name
+          "awslogs-region" = "eu-west-2"
 
-          awslogs-stream-prefix = "ecs"
+          "awslogs-stream-prefix" = "ecs"
 
       } }
 

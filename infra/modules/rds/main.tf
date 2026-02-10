@@ -3,16 +3,16 @@ resource "aws_db_subnet_group" "main" {
   subnet_ids = var.private_subnet_ids
 }
 
-resource "aws_db_instance" "postgres" {
+resource "aws_db_instance" "main" {
 identifier             = "print-manager-db"
 allocated_storage      = 20
 storage_type           = "gp3"
 engine                 = "postgres"
-engine_version         = "15.4"
+engine_version         = "15"
 instance_class         = "db.t3.micro"
 db_name                = "printmanager"
-username               = "admin"
-password               = var.db_password
+username               = "print"
+password               = "password123"
 
 
 

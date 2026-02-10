@@ -14,3 +14,11 @@ variable "ecs_target_group_arn" {
   type = string
 }
 
+#variable "db_password" {
+  #type = string
+  
+#}
+
+variable "rds_endpoint" {
+  type = string
+}

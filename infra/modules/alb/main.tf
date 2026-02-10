@@ -27,7 +27,7 @@ enabled             = true
 healthy_threshold   = 2
 unhealthy_threshold = 2
 interval            = 30
-path                = "/healthz"
+path                = "/health"
 protocol            = "HTTP"
 timeout             = 5
 matcher             = "200"
@@ -38,28 +38,7 @@ Name = "url-shortener-blue-tg"
 }
 }
 
-resource "aws_lb_target_group" "green" {
-name        = "url-shortener-green"
-port        = 8080
-protocol    = "HTTP"
-target_type = "ip"
-vpc_id      = var.vpc_id
 
-health_check {
-enabled             = true
-healthy_threshold   = 2
-unhealthy_threshold = 2
-interval            = 30
-path                = "/healthz"
-protocol            = "HTTP"
-timeout             = 5
-matcher             = "200"
-}
-
-tags = {
-Name = "url-shortener-green-tg"
-}
-}
 
 resource "aws_alb_listener" "name" {
   load_balancer_arn = aws_lb.main.arn

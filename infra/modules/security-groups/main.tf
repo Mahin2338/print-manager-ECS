@@ -83,10 +83,10 @@ resource "aws_security_group" "ecs" {
 
     
     egress {
-        description = "Vpc-endpoints"
-        protocol    = "tcp"
-        from_port   = 443
-        to_port     = 443
+        description = "Allow all within VPC"
+        protocol    = "-1"
+        from_port   = 0
+        to_port     = 0
         cidr_blocks = ["0.0.0.0/0"]
     }
 
