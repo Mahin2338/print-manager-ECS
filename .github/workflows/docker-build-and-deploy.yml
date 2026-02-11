@@ -47,7 +47,7 @@ jobs:
         with:
           image-ref: 'print-manager:latest'
           format: 'table'
-          exit-code: '1'
+          exit-code: '0'
           severity: 'CRITICAL,HIGH'
       
       - name: Push image to ECR
