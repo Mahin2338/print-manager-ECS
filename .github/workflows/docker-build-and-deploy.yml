@@ -59,7 +59,7 @@ jobs:
       - name: Update Service 
         run: |
           aws ecs update-service \
-          --cluster my-cluster \
+          --cluster url-shortener-cluster \
           --service my-service \
           --force-new-deployment 
       
