@@ -33,13 +33,13 @@ jobs:
           soft_fail: true   
       
       - name: Terraform init
-        working-directory: ./infra/ens/dev
+        working-directory: ./infra/envs/dev
         run: terraform init
      
       - name: Terraform plan
-        working-directory: ./infra/ens/dev
+        working-directory: ./infra/envs/dev
         run: terraform plan
       
       - name: Terraform Apply
-        working-directory: ./infra/ens/dev
+        working-directory: ./infra/envs/dev
         run: terraform apply -auto-approve
