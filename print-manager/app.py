@@ -1,3 +1,41 @@
+
+
+from fastapi import FastAPI
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+import os
+import models
+import seed_data  
+
+
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(bind=engine)
+
+
+
+models.Base.metadata.create_all(bind=engine)
+
+
+
+try:
+    db = SessionLocal()
+
+    if db.query(models.Printer).count() == 0:
+        print("Database empty, running seed...")
+        seed_data.seed_database()  
+        print("Seeding complete!")
+    else:
+        print("Data already exists, skipping seed")
+    db.close()
+except Exception as e:
+    print(f"Seed error: {e}")
+
+app = FastAPI()
+
+
+
 from fastapi import FastAPI, Request, Form, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -6,6 +44,7 @@ from sqlalchemy.orm import Session
 from datetime import datetime
 import models
 from database import engine, get_db
+
 
 # Create database tables
 models.Base.metadata.create_all(bind=engine)

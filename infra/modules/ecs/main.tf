@@ -36,7 +36,7 @@ resource "aws_ecs_task_definition" "url-shortener" {
       environment = [
         {
           name = "DATABASE_URL"
-          value = "postgresql://admin:password123@${var.rds_endpoint}/printmanager?sslmode=require"
+          value = "postgresql://print:password123@${var.rds_endpoint}/printmanager?sslmode=require"
         
         }
         
