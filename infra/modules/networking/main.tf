@@ -9,9 +9,9 @@ module "vpc" {
   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24"]
 
   enable_nat_gateway = false
-  enable_vpn_gateway = false 
+  enable_vpn_gateway = false # for externl vpc connection (on prem)
 
-  enable_dns_hostnames = true
+  enable_dns_hostnames = true 
   enable_dns_support = true
 
   tags = {
@@ -22,7 +22,7 @@ module "vpc" {
 
 
 
-# S3 Endpoint
+# S3 Endpoint . Gateway Endpoint. ECR stores Docker image layers in S3
 resource "aws_vpc_endpoint" "s3" {
   vpc_id            = module.vpc.vpc_id
   service_name      = "com.amazonaws.eu-west-2.s3"
@@ -33,18 +33,8 @@ resource "aws_vpc_endpoint" "s3" {
   }
 }
 
-# DynamoDB Endpoint
-resource "aws_vpc_endpoint" "dynamodb" {
-  vpc_id            = module.vpc.vpc_id
-  service_name      = "com.amazonaws.eu-west-2.dynamodb"
-  route_table_ids   = module.vpc.private_route_table_ids
 
-  tags = {
-    Name = "dynamodb-endpoint"
-  }
-}
-
-# ECR Endpoint
+# ECR Endpoint ECS calls ECR API to Authenticate
 resource "aws_vpc_endpoint" "ecr_api" {
   vpc_id              = module.vpc.vpc_id
   service_name        = "com.amazonaws.eu-west-2.ecr.api"
@@ -58,7 +48,7 @@ resource "aws_vpc_endpoint" "ecr_api" {
   }
 }
 
-# ECR Docker Endpoint
+# ECR Docker Endpoint ECS uses Docker Ap to pull images
 resource "aws_vpc_endpoint" "ecr_dkr" {
   vpc_id              = module.vpc.vpc_id
   service_name        = "com.amazonaws.eu-west-2.ecr.dkr"
@@ -72,7 +62,7 @@ resource "aws_vpc_endpoint" "ecr_dkr" {
   }
 }
 
-# CloudWatch Endpoint
+# CloudWatch Endpoint ECS sneds container logs to CloudWatch
 resource "aws_vpc_endpoint" "logs" {
   vpc_id              = module.vpc.vpc_id
   service_name        = "com.amazonaws.eu-west-2.logs"
@@ -86,7 +76,7 @@ resource "aws_vpc_endpoint" "logs" {
   }
 }
 
-# ECS Endpoint
+# ECS Endpoint ECS tasks calls ECS api for task metdat health status reporting
 resource "aws_vpc_endpoint" "ecs" {
   vpc_id              = module.vpc.vpc_id
   service_name        = "com.amazonaws.eu-west-2.ecs"

@@ -7,7 +7,7 @@ ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
 REPO="print-manager"
 VERSION=${1:-latest}
 
-echo "🚀 Pushing to ECR..."
+echo "Pushing to ECR..."
 
 # Create repo if doesn't exist
 

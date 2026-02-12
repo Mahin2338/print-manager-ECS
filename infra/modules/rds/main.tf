@@ -3,6 +3,8 @@ resource "aws_db_subnet_group" "main" {
   subnet_ids = var.private_subnet_ids
 }
 
+
+
 resource "aws_db_instance" "main" {
 identifier             = "print-manager-db"
 allocated_storage      = 20
@@ -12,8 +14,7 @@ engine_version         = "15"
 instance_class         = "db.t3.micro"
 db_name                = "printmanager"
 username               = "print"
-password               = "password123"
-
+password               = var.db_password
 
 
 db_subnet_group_name   = aws_db_subnet_group.main.name
