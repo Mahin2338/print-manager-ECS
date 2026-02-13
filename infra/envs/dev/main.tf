@@ -7,7 +7,7 @@ module "networking" {
 module "security" {
   source   = "../../modules/security-groups"
   vpc_id   = module.networking.vpc_id
-  app_port = var.app_port
+  app_port = 8080
   vpc_cidr = module.networking.vpc_cidr_block
 
 
