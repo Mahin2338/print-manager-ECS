@@ -29,12 +29,12 @@ maintenance_window     = "Mon:04:00-Mon:05:00"
 
 
 
-skip_final_snapshot    = true  
-deletion_protection    = false 
+skip_final_snapshot    = true  # no final snapshot when deleted 
+deletion_protection    = false # delete allowed for dev
 
 
 
-storage_encrypted      = true
+storage_encrypted      = true #encrypts data
 
 tags = {
 Name        = "Print Manager Database"
