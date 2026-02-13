@@ -38,7 +38,7 @@ jobs:
      
       - name: Terraform plan
         working-directory: ./infra/envs/dev
-        run: terraform plan
+        run: terraform plan -input=false
       
       - name: Terraform Apply
         working-directory: ./infra/envs/dev
